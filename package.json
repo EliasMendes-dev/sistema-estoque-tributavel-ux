@@ -4,9 +4,9 @@
   "private": true,
   "packageManager": "pnpm@12.3.4",
   "scripts": {
-    "dev": "ng serve --host 0.0.0.0",
+    "dev": "ng serve --host 0.0.0.0 --port 3000",
     "build": "ng build",
-    "start": "ng serve --host 0.0.0.0"
+    "start": "ng serve --host 0.0.0.0 --port 3000"
   },
   "dependencies": {
     "@angular/animations": "^20.3.34",
