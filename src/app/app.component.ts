@@ -11,12 +11,11 @@ type Movement = { type: 'Entrada' | 'Venda'; code: string; product: string; quan
   imports: [CommonModule, FormsModule],
   template: `
     <div class="shell">
-      <aside class="sidebar">
-        <div class="brand"><div class="brand-mark">ET</div><div><strong>Estoque Tributável</strong><small>Tech & Games</small></div></div>
+      <aside class="sidebar" [class.collapsed]="sidebarCollapsed">
+        <div class="brand"><div class="brand-mark">ET</div><div class="brand-copy"><strong>Estoque Tributável</strong><small>Tech & Games</small></div><button class="collapse-toggle" (click)="sidebarCollapsed = !sidebarCollapsed" [attr.aria-label]="sidebarCollapsed ? 'Expandir menu' : 'Minimizar menu'" [attr.title]="sidebarCollapsed ? 'Expandir menu' : 'Minimizar menu'"><span>{{ sidebarCollapsed ? '→' : '←' }}</span></button></div>
         <nav aria-label="Navegação principal"><label>Menu principal</label>
-          <button *ngFor="let item of nav" [class.active]="page === item" (click)="page = item"><span>{{ icon(item) }}</span><span>{{ item }}</span><b class="count" *ngIf="item === 'Movimentações'">{{ movements.length }}</b></button>
+          <button *ngFor="let item of nav" [class.active]="page === item" (click)="page = item" [attr.title]="sidebarCollapsed ? item : null"><span class="nav-icon">{{ icon(item) }}</span><span class="nav-label">{{ item }}</span><b class="count" *ngIf="item === 'Movimentações'">{{ movements.length }}</b></button>
         </nav>
-        <div class="settings"><button class="btn outline" (click)="notice = 'Configurações disponíveis em breve.'">⚙ <span>Configurações</span></button></div>
       </aside>
       <section class="main">
         <header><div><p>Visão geral</p><h1>{{ page }}</h1></div><div class="header-actions"><select [(ngModel)]="regime"><option>Simples Nacional</option><option>Lucro Presumido</option><option>Lucro Real</option></select><div class="avatar">AF</div><div class="user"><strong>Admin FUN-001</strong><small>Administrador</small></div></div></header>
@@ -36,7 +35,7 @@ type Movement = { type: 'Entrada' | 'Venda'; code: string; product: string; quan
   `
 })
 export class AppComponent {
-  page = 'Dashboard'; query = ''; regime = 'Simples Nacional'; notice = '';
+  page = 'Dashboard'; query = ''; regime = 'Simples Nacional'; notice = ''; sidebarCollapsed = false;
   nav = ['Dashboard', 'Produtos', 'Movimentações', 'Clientes', 'Funcionários', 'Relatórios'];
   products: Product[] = [
     { code:'PLV-01', name:'RTX 4060 Gaming OC', category:'Placas de vídeo', price:2849.90, current:4, minimum:3, tax:18 }, { code:'CNS-05', name:'PlayStation 5 Slim', category:'Consoles', price:3999.90, current:2, minimum:5, tax:25 }, { code:'ACC-12', name:'Headset HyperX Cloud III', category:'Periféricos', price:699.90, current:18, minimum:10, tax:12 }, { code:'NBK-08', name:'Notebook Legion 5i', category:'Computadores', price:7499, current:3, minimum:3, tax:18 }, { code:'CON-21', name:'Nintendo Switch OLED', category:'Consoles', price:2299.90, current:8, minimum:4, tax:25 }
